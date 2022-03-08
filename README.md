@@ -2,6 +2,9 @@
 
 An example 10x bot for syncing Linear issues via GitHub webhooks & the Linear API.
 
+You will need to set these environment variables in order for this to run:
+- `GITHUB_WEBHOOK_SECRET`
+
 👇👇 **Original README** 👇👇
 
 This project has been generated using the `aws-nodejs-typescript` template from the [Serverless framework](https://www.serverless.com/).

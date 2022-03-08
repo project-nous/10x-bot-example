@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@middy/core": "^2.5.3",
-    "@middy/http-json-body-parser": "^2.5.3"
+    "@middy/http-header-normalizer": "^2.5.7",
+    "@middy/http-json-body-parser": "^2.5.3",
+    "@octokit/webhooks": "^9.22.0",
+    "@octokit/webhooks-schemas": "^5.4.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
