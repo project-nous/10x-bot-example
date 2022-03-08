@@ -4,6 +4,10 @@ An example 10x bot for syncing Linear issues via GitHub webhooks & the Linear AP
 
 You will need to set these environment variables in order for this to run:
 - `GITHUB_WEBHOOK_SECRET`
+- `LINEAR_API_KEY`
+- `LINEAR_READY_STATE_ID`
+- `LINEAR_DONE_STATE_ID`
+- `LINEAR_ENGINEERING_LABEL_ID`
 
 👇👇 **Original README** 👇👇
 
