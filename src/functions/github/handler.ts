@@ -22,7 +22,8 @@ const github = new Webhooks({
 export const linear = new LinearClient({ apiKey: LINEAR_API_KEY });
 
 github.on("push", async ({ payload: { ref, repository } }) => {
-  if (ref === "refs/heads/production" && repository.name === "monorepo") {
+  // INSERT YOUR OWN LOGIC BELOW 👇
+  if (ref === "refs/heads/MY_PRODUCTION_BRANCH" && repository.name === "MY_REPO_NAME") {
     let issues = await linear.issues({
       filter: {
         state: {
