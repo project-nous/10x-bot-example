@@ -1,6 +1,5 @@
 import type { AWS } from "@serverless/typescript";
 
-import hello from "@functions/hello";
 import github from "@functions/github";
 
 const serverlessConfiguration: AWS = {
@@ -25,7 +24,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello, github },
+  functions: { github },
   package: { individually: true },
   custom: {
     esbuild: {

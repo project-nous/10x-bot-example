@@ -1,4 +1,5 @@
 import schema from "./schema";
+import * as assert from "assert";
 import { Webhooks, EmitterWebhookEventName } from "@octokit/webhooks";
 import {
   formatJSONResponse,
@@ -8,17 +9,22 @@ import { middyfy } from "@libs/lambda";
 import {
   DONE_STATE_ID,
   ENGINEERING_LABEL_ID,
-  linearClient,
   READY_STATE_ID,
-} from "@libs/linear";
+  GITHUB_WEBHOOK_SECRET,
+  LINEAR_API_KEY,
+} from "@libs/env";
+import { LinearClient } from "@linear/sdk";
 
 const github = new Webhooks({
-  secret: process.env.GITHUB_WEBHOOK_SECRET,
+  secret: GITHUB_WEBHOOK_SECRET,
 });
 
+export const linear = new LinearClient({ apiKey: LINEAR_API_KEY });
+
 github.on("push", async ({ payload: { ref, repository } }) => {
-  if (ref === "refs/heads/production" && repository.name === "monorepo") {
-    let issues = await linearClient.issues({
+  // INSERT YOUR OWN LOGIC BELOW 👇
+  if (ref === "refs/heads/MY_PRODUCTION_BRANCH" && repository.name === "MY_REPO_NAME") {
+    let issues = await linear.issues({
       filter: {
         state: {
           id: {
@@ -35,7 +41,7 @@ github.on("push", async ({ payload: { ref, repository } }) => {
 
     while (issues.nodes.length) {
       const ids = issues.nodes.map((issue) => issue.id);
-      await linearClient.issueBatchUpdate(ids, { stateId: DONE_STATE_ID });
+      await linear.issueBatchUpdate(ids, { stateId: DONE_STATE_ID });
 
       if (issues.pageInfo.hasNextPage) {
         issues = await issues.fetchNext();
@@ -47,11 +53,22 @@ github.on("push", async ({ payload: { ref, repository } }) => {
 const handler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
   event
 ) => {
+  const { headers, body: payload } = event;
+  const id = headers["x-github-delivery"];
+  const name = headers["x-github-event"] as EmitterWebhookEventName;
+  const signature = headers["x-hub-signature-256"];
+
+  // These headers should be set, fall over if they're not.
+  // (you might want to 400 here instead...)
+  assert.ok(id);
+  assert.ok(name);
+  assert.ok(signature);
+
   await github.verifyAndReceive({
-    id: event.headers["x-github-delivery"],
-    name: event.headers["x-github-event"] as EmitterWebhookEventName,
-    payload: event.body,
-    signature: event.headers["x-hub-signature-256"],
+    id,
+    name,
+    payload,
+    signature,
   });
 
   return formatJSONResponse({

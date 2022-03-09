@@ -3,13 +3,15 @@
 An example 10x bot for syncing Linear issues via GitHub webhooks & the Linear API.
 
 You will need to set these environment variables in order for this to run:
+
 - `GITHUB_WEBHOOK_SECRET`
 - `LINEAR_API_KEY`
 - `LINEAR_READY_STATE_ID`
 - `LINEAR_DONE_STATE_ID`
 - `LINEAR_ENGINEERING_LABEL_ID`
 
-👇👇 **Original README** 👇👇
+<details>
+<summary><strong>Original (generated) README</strong><<summary>
 
 This project has been generated using the `aws-nodejs-typescript` template from the [Serverless framework](https://www.serverless.com/).
 
@@ -104,3 +106,5 @@ The project code base is mainly located within the `src` folder. This folder is 
 ### Advanced usage
 
 Any tsconfig.json can be used, but if you do, set the environment variable `TS_NODE_CONFIG` for building the application, eg `TS_NODE_CONFIG=./tsconfig.app.json npx serverless webpack`
+
+</details>
