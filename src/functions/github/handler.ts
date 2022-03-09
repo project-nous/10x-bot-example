@@ -1,5 +1,5 @@
 import schema from "./schema";
-import * as assert from "assert"
+import * as assert from "assert";
 import { Webhooks, EmitterWebhookEventName } from "@octokit/webhooks";
 import {
   formatJSONResponse,
@@ -52,10 +52,10 @@ github.on("push", async ({ payload: { ref, repository } }) => {
 const handler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
   event
 ) => {
-  const {headers, body: payload} = event
-  const id =  headers["x-github-delivery"];
+  const { headers, body: payload } = event;
+  const id = headers["x-github-delivery"];
   const name = headers["x-github-event"] as EmitterWebhookEventName;
-  const signature =  headers["x-hub-signature-256"];
+  const signature = headers["x-hub-signature-256"];
 
   // These headers should be set, fall over if they're not.
   // (you might want to 400 here instead...)
