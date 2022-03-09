@@ -8,7 +8,12 @@
     "removeComments": true,
     "sourceMap": true,
     "target": "ES2020",
-    "outDir": "lib"
+    "outDir": "lib",
+    // TSC complains about node_modules/@serverless/typescript/index.d.ts
+    "skipLibCheck": true,
+    // Because we're using @octokit/webhooks-schemas
+    // which exposes a JSON file as its `main`
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "serverless.ts"],
   "exclude": [

@@ -1,1 +1,3 @@
-export { default } from "@octokit/webhooks-schemas";
+import * as schema from "@octokit/webhooks-schemas";
+
+export default schema;
